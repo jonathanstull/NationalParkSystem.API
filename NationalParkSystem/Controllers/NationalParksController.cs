@@ -36,7 +36,7 @@ namespace NationalParkSystem.Controllers
     // GET general route
     // stretch goals to add queries for more complex LatLong, Visits, Climate data; figure out boolean false return
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<NationalPark>>> Get(string name, string state, bool rvServices)
+    public async Task<ActionResult<IEnumerable<NationalPark>>> Get(string name, string state)
     {
       var query = _db.NationalParks.AsQueryable();
 
