@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace NationalParkSystem.Models
+namespace NationalParkSystem.Models.Users
 {
   public class AuthenticateRequest
   {
