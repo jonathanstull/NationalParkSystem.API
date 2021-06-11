@@ -1,10 +1,10 @@
 # National Park System: An API
 
-### A Week XIII Epicodus Project, 12 June 2021
+### A Week XIII Epicodus Project, 11 June 2021
 
 _By Jonathan Stull_
 
-## **Description**
+## **About**
 
 This project is an experimental national and state park system API. It allows users to create, read, update, and delete national and state parks. This version is designed for developers to provide accurate and useful information to users who are interested in outdoor recreation inside of the national and state parks systems.
 
@@ -23,7 +23,8 @@ This project is an experimental national and state park system API. It allows us
   2. In a terminal window, navigate into the `~/NationalParkSystem.Solution` directory and open in VSCode or preferred text editor with the command `code .`
   3. This project uses C#/.NET. To build and execute the code, first restore all dependencides using `dotnet restore` followed by the command `dotnet run`
 
-* Setting up a MySQL database
+* Setting up migrations with a MySQL database
+  * For more information about migrations, please refer to the [Microsoft EF Core documentation](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations)
   1. Download and install MySQL and MySQLWorkbench in accordance with [this tutorial](https://www.learnhowtoprogram.com/c-and-net/getting-started-with-c/installing-and-configuring-mysql)
   2. In your cloned repository, navigate to the production directory `~/NationalParkSystem` and restore all dependencies with `dotnet restore`
   3. In the CLI, create a new file with the command `touch .appsettings.json` and apply the settings in the codeblock below to specify the MySQL database (please note that **you must change `[SECRET]`, `[YOUR_DATABASE_NAME]`, `[YOUR_USERNAME]` and `[YOUR_PASSWORD]`** to reflect your user information; see below):
@@ -50,11 +51,37 @@ This project is an experimental national and state park system API. It allows us
 
 ## **Endpoints**
 
+**Testing**
+
+To test this API, [Postman](https://www.postman.com/downloads) is a highly recommended client that allows access to these endpoints with GET, POST, PUT, and DELETE requests alongside a host of others. To test, follow these steps in this example, which will also provide you with the JWT key you will need to access this API's endpoints:
+
+  1. Download and install [Postman](https://www.postman.com/downloads)
+  2. Open a new request by selecting the `File` menu or clicking the `+` in the taskbar
+  3. Make sure you are running this project by navigating to the production directory at `~/NationalParkSystem` and running, in the following order, the commands `dotnet restore`, `dotnet ef database update`, and `dotnet run`
+  3. Select the type of request you would like to make. To retrieve a JWT, select `POST` and enter `http://localhost:5000/api/users/authenticate` into the request URL
+  4. In the `Body` tab, select `Raw`, select `Json` in the adjacent dropdown menu, and use the following template to enter user information into the body:
+
+  ```
+  {
+    "username": "[YOUR_USERNAME]",
+    "password": "[YOUR_PASSWORD]"
+  }
+  ```
+    
+    * **Note:** Username and password are currently hardcoded into the `_users` property of `UserService.cs` and can be changed as desired
+  5. Send the request. If successful, the `200 OK` response will include a JWT token
+  6. To make a request to other endpoints, open a new request as in step 2
+  7. Complete the fields required by the request type and the endpoint requested
+  8. Navigate to the `Authorization` tab and select `Bearer Token` from the `Type` dropdown menu
+  9. Copy your JWT token and paste into the corresponding `Token` input field
+  10. Send your request!
+
 **Users**
   1. `/api/users/authenticate`: POST serves the username and password to the API to generate a JWT in the response body
-    * **NOTE: All API endpoints require authentication for access; please see the section titled JWT Authentication for action steps**
+    * **NOTE: All API endpoints require authentication from this endpoint for access**
 
 **National Parks**
+  * **Note:** You must replace `{id}` with the corresponding national or state park id to enable access to endpoints requiring an id
   1. `/api/nationalparks`: GET general returns all national parks in the database and supports query by name (inclusive and case insensitive) and geographical state location (exact match by state code, e.g. AK, OR, CA)
   2. `/api/nationalparks`: POST adds a national park with all required fields (Name, Status, LatLong, State, Visits, BusySeason, Climate, and RvServices)
   3. `/api/nationalparks/{id}`: GET by id returns a national park by its NationalParkId
