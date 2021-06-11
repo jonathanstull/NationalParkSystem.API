@@ -54,13 +54,24 @@ This project is an experimental National Park Service API for developers. It doe
 * Setting up a MySQL database
   1. Download and install MySQL and MySQLWorkbench in accordance with [this tutorial](https://www.learnhowtoprogram.com/c-and-net/getting-started-with-c/installing-and-configuring-mysql)
   2. In your cloned repository, navigate to the production directory `~/NationalParkSystem` and restore all dependencies with `dotnet restore`
-  3. In the CLI, create a new file with the command `touch .appsettings.json` and apply the settings in the codeblock below to specify the MySQL database (please note that **you must change `[YOUR_DATABASE_NAME]`, `[YOUR_USERNAME]` and `[YOUR_PASSWORD]`** to reflect your user information; see below):
+  3. In the CLI, create a new file with the command `touch .appsettings.json` and apply the settings in the codeblock below to specify the MySQL database (please note that **you must change `[SECRET]`, `[YOUR_DATABASE_NAME]`, `[YOUR_USERNAME]` and `[YOUR_PASSWORD]`** to reflect your user information; see below):
   4. In the CLI, enter the command `dotnet ef database update` to generate the schema and corresponding tables from the existing `Migrations` folder
   
     ```
     {
-    "ConnectionStrings": {
-      "DefaultConnection": "Server=localhost;Port=3306;database=[YOUR_DATABASE_NAME];uid=[YOUR_USERNAME];pwd=[YOUR_PASSWORD];"
+      "AppSettings": {
+        "Secret": "[This is a secret key longer than 32 bits that you can define however you want]"
+      },
+      "Logging": {
+        "LogLevel": {
+          "Default": "Information",
+          "Microsoft": "Warning",
+          "Microsoft.Hosting.Lifetime": "Information"
+        }
+      },
+      "AllowedHosts": "*",
+      "ConnectionStrings": {
+        "DefaultConnection": "Server=localhost;Port=3306;database=[YOUR_DATABASE_NAME];uid=[YOUR_USERNAME];pwd=[YOUR_PASSWORD];"
       }
     }
     ```
