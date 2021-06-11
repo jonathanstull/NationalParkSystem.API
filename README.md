@@ -1,31 +1,3 @@
-Model structure
-
-NationalPark
-  int NationalParkId
-  string Name
-  string Status
-  string LatLong
-  string State
-  int Visits
-  string BusySeason
-  string Climate
-  bool RvServices
-  blob Topo
-
-StatePark
-  int StateParkId
-  string Name
-  string Status
-  string LatLong
-  string State
-  int Visits
-  string BusySeason
-  string Climate
-  bool RvServices
-  blob Topo
-
-
-
 # National Park System: An API
 
 ### A Week XIII Epicodus Project, 12 June 2021
@@ -34,7 +6,7 @@ _By Jonathan Stull_
 
 ## **Description**
 
-This project is an experimental National Park Service API for developers. It does many things.
+This project is an experimental national and state park system API. It allows users to create, read, update, and delete national and state parks. This version is designed for developers to provide accurate and useful information to users who are interested in outdoor recreation inside of the national and state parks systems.
 
 ## **Setup/Installation Requirements**
 
@@ -43,7 +15,7 @@ This project is an experimental National Park Service API for developers. It doe
   2. A code editor like VSCode or Atom to view or edit the codebase
 
 * Download/clone instructions
-  1. Download this repository onto your computer by clicking the 'code' button
+  1. Download this repository onto your computer by clicking the 'code' button in the GitHub repository
   2. Open the project folder.
 
 * Open via Bash/GitBash:
@@ -76,9 +48,29 @@ This project is an experimental National Park Service API for developers. It doe
     }
     ```
 
+## **Endpoints**
+
+**Users**
+  1. `/api/users/authenticate`: POST serves the username and password to the API to generate a JWT in the response body
+    * **NOTE: All API endpoints require authentication for access; please see the section titled JWT Authentication for action steps**
+
+**National Parks**
+  1. `/api/nationalparks`: GET general returns all national parks in the database and supports query by name (inclusive and case insensitive) and geographical state location (exact match by state code, e.g. AK, OR, CA)
+  2. `/api/nationalparks`: POST adds a national park with all required fields (Name, Status, LatLong, State, Visits, BusySeason, Climate, and RvServices)
+  3. `/api/nationalparks/{id}`: GET by id returns a national park by its NationalParkId
+  4. `/api/nationalparks/{id}`: PUT updates a national park by NationalParkId with all required fields and any updated information
+  5. `/api/nationalparks/{id}`: DELETE deletes a national park by NationalParkId
+
+**State Parks**
+  1. `/api/stateparks`: GET general returns all state parks in the database and supports query by name (inclusive and case insensitive) and geographical state location (exact match by state code, e.g. AK, OR, CA)
+  2. `/api/stateparks`: POST adds a state park with all required fields (Name, Status, LatLong, State, Visits, BusySeason, Climate, and RvServices)
+  3. `/api/stateparks/{id}`: GET by id returns a state park by its StateParkId
+  4. `/api/stateparks/{id}`: PUT updates a state park by StateParkId with all required fields and any updated information
+  5. `/api/stateparks/{id}`: DELETE deletes a state park by StateParkId
+
 ## **Known Bugs**
 
-* None
+* version 0.9: GET query by RvServices boolean returns all parks when the query is empty (i.e., null or not defined, reading as false) and no current solution exists that will accurately evaluate each condition; this functionality is disabled in this version
 
 ## **Specs**
 
@@ -113,6 +105,12 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM.cs, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## **Acknowledgements**
+
+This project was developed alongside the [LearnHowToProgram curriculum](learnhowtoprogram.com) at Epicodus, a coding bootcamp in Portland, Oregon. This project would not have been possible without the collaboration of [Nick Reeder](https://github.com/reeder32) and [Jeremy Banka](https://github.com/jeremybanka).
+
+JWT authentication in this app would not have been possible without the tutelage of [Jason Watmore](https://github.com/cornflourblue), whose [JWT tutorials](https://jasonwatmore.com/posts/tag/jwt) are extraordinarily inspiring and insightful. For .NET 5.0 users, refer to [.NET 5.0 - JWT Authentication Tutorial with Example API](https://jasonwatmore.com/post/2021/04/30/net-5-jwt-authentication-tutorial-with-example-api) for this app's implementation.
 
 ## **Contact Information**
 
