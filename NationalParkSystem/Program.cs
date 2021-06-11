@@ -21,7 +21,7 @@ namespace NationalParkSystem
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    // configure to use specific port?
+                    // configure to use specific port if building a client app
                 });
     }
 }
