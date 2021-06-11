@@ -52,5 +52,69 @@ namespace NationalParkSystem.Controllers
 
       return await query.ToListAsync();
     }
+
+    // GET with id
+    [HttpGet("{id}")]
+    public async Task<ActionResult<NationalPark>> GetNationalPark(int id)
+    {
+      var park = await _db.NationalParks.FirstOrDefaultAsync(park => park.NationalParkId == id);
+      
+      if (park == null)
+      {
+        return NotFound();
+      }
+
+      return park;
+    }
+
+    // PUT with id
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, NationalPark park)
+    {
+      if (id != park.NationalParkId)
+      {
+        return BadRequest();
+      }
+
+      _db.Entry(park).State = EntityState.Modified;
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!NationalParkExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+
+      return CreatedAtAction("Put", park); // optimizes PUT response with 200 OK and updated object
+    }
+
+
+    // DELETE with id
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteNationalPark(int id)
+    {
+      var park = await _db.NationalParks.FindAsync(id);
+
+      if (park == null)
+      {
+        return NotFound();
+      }
+
+      _db.NationalParks.Remove(park);
+      await _db.SaveChangesAsync();
+
+      return NoContent();
+    }
+
   }
 }
