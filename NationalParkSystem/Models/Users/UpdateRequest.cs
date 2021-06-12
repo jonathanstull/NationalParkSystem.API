@@ -1,6 +1,6 @@
 namespace NationalParkSystem.Models.Users
 {
-  public class UpdateModel
+  public class UpdateRequest
   {
     public string FirstName { get; set; }
     public string LastName { get; set; }

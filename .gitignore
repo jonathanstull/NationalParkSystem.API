@@ -1,6 +1,7 @@
-*/obj
-*/bin
-.vscode
-.vs
 */appsettings.json
 */appsettings.Development.json
+*/bin
+*/.env
+*/obj
+.vscode
+.vs

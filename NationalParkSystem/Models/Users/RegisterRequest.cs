@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NationalParkSystem.Models.Users
 {
-  public class RegisterModel
+  public class RegisterRequest
   {
     [Required]
     public string FirstName { get; set; }

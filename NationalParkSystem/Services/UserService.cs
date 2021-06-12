@@ -1,5 +1,5 @@
 using AutoMapper;
-using BCryptNew = BCrypt.Net.BCrypt;
+using BCryptNet = BCrypt.Net.BCrypt;
 using System.Collections.Generic;
 using System.Linq;
 using NationalParkSystem.Authorization;
@@ -7,12 +7,6 @@ using NationalParkSystem.Entities;
 using NationalParkSystem.Helpers;
 using NationalParkSystem.Models.Users;
 
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace NationalParkSystem.Services
 {
@@ -28,7 +22,7 @@ namespace NationalParkSystem.Services
 
   public class UserService : IUserService
   {
-    private DuplicateTypeMapConfigurationException _context;
+    private DataContext _context;
     private IJwtUtils _jwtUtils;
     private readonly IMapper _mapper;
 
@@ -45,8 +39,8 @@ namespace NationalParkSystem.Services
     {
       var user = _context.Users.SingleOrDefault(x => x.Username == model.Username);                                         // calls the user to the current context
 
-      if (user == null) || !BCryptNet.Verify(model.Password, user.PasswordHash);                                            // validates
-          throw new ApplicationException("Username or password is incorrect");
+      if (user == null || !BCryptNet.Verify(model.Password, user.PasswordHash))                                            // validates
+          throw new AppException("Username or password is incorrect");
 
       var response = _mapper.Map<AuthenticateResponse>(user);
       response.JwtToken = _jwtUtils.GenerateToken(user);                                                                    // calls custom method to generate JWT
@@ -67,7 +61,7 @@ namespace NationalParkSystem.Services
     public void Register(RegisterRequest model)
     {
       if (_context.Users.Any(x => x.Username == model.Username))
-          throw new ApplicationException("Username '" + model.Username + "' is already taken");                             // checks to see if username already exists
+          throw new AppException("Username '" + model.Username + "' is already taken");                             // checks to see if username already exists
     
       var user = _mapper.Map<User>(model);
 
@@ -82,7 +76,7 @@ namespace NationalParkSystem.Services
       var user = getUser(id);
 
       if (model.Username != user.Username && _context.Users.Any(x => x.Username == model.Username))
-          throw new ApplicationException("Username '" + model.Username + "' is already taken");
+          throw new AppException("Username '" + model.Username + "' is already taken");
 
       if (!string.IsNullOrEmpty(model.Password))
           user.PasswordHash = BCryptNet.HashPassword(model.Password);
@@ -105,19 +99,5 @@ namespace NationalParkSystem.Services
       if (user == null) throw new KeyNotFoundException("User not found");
       return user;
     }
-
-    // private string generateJwtToken(User user)                                                                              // generates the JWT token, which remains active for 7 days
-    // {
-    //   var tokenHandler = new JwtSecurityTokenHandler();                                                                     // instantiates a token handler
-    //   var key = Encoding.ASCII.GetBytes(_appSettings.Secret);                                                               // generates array of bytes converted from the secret in appsettings.json
-    //   var tokenDescriptor = new SecurityTokenDescriptor
-    //   {
-    //     Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),                                        // instatiates a user claim for this user
-    //     Expires = DateTime.UtcNow.AddDays(7),                                                                               // sets an expiration for the JWT
-    //     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)  // generates security key based on the converted secret
-    //   };
-    //   var token = tokenHandler.CreateToken(tokenDescriptor);                                                                // creates the JWT token with required attributes
-    //   return tokenHandler.WriteToken(token);                                                                                // returns the token to the authentication method
-    // }
   }
 }
