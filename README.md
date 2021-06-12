@@ -97,7 +97,9 @@ To test this API, [Postman](https://www.postman.com/downloads) is a highly recom
 
 ## **Known Bugs**
 
-* version 0.9: GET query by RvServices boolean returns all parks when the query is empty (i.e., null or not defined, reading as false) and no current solution exists that will accurately evaluate each condition; this functionality is disabled in this version
+* version 0.9:
+  1. GET query by RvServices boolean returns all parks when the query is empty (i.e., null or not defined, reading as false) and no current solution exists that will accurately evaluate each condition; this functionality is disabled in this version
+  2. `dev` branch attempts to implement user registration and fails due to server and migration conflicts; it has not yet been merged to branch `main`
 
 ## **Specs**
 
