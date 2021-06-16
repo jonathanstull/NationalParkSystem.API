@@ -15,6 +15,8 @@ namespace NationalParkSystem.Services
   public interface IUserService
   {
     AuthenticateResponse Authenticate(AuthenticateRequest model);
+    IEnumerable<User> GetAll();
+    User GetById(int id);
   }
 
   public class UserService : IUserService
@@ -40,6 +42,16 @@ namespace NationalParkSystem.Services
       var token = generateJwtToken(user);                                                                                   // calls custom method to generate JWT
 
       return new AuthenticateResponse(user, token);                                                                         // returns the user and the token in the response
+    }
+
+    public IEnumerable<User> GetAll()
+    {
+      return _users;
+    }
+
+    public User GetById(int id)
+    {
+      return _users.FirstOrDefault(x => x.Id == id);
     }
 
     private string generateJwtToken(User user)                                                                              // generates the JWT token, which remains active for 7 days
