@@ -58,7 +58,7 @@ To test this API, [Postman](https://www.postman.com/downloads) is a highly recom
   1. Download and install [Postman](https://www.postman.com/downloads)
   2. Open a new request by selecting the `File` menu or clicking the `+` in the taskbar
   3. Make sure you are running this project by navigating to the production directory at `~/NationalParkSystem` and running, in the following order, the commands `dotnet restore`, `dotnet ef database update`, and `dotnet run`
-  3. Select the type of request you would like to make. To retrieve a JWT, select `POST` and enter `http://localhost:5000/api/users/authenticate` into the request URL
+  3. Select the type of request you would like to make. To retrieve a JWT, select `POST` and enter `http://localhost:5000/api/users/authenticate` into the request URL (**you must obtain a JWT token to access this API's endpoints**)
   4. In the `Body` tab, select `Raw`, select `Json` in the adjacent dropdown menu, and use the following template to enter user information into the body:
 
   ```
