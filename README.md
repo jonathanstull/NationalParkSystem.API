@@ -63,18 +63,18 @@ To test this API, [Postman](https://www.postman.com/downloads) is a highly recom
 
   ```
   {
-    "username": "[YOUR_USERNAME]",
-    "password": "[YOUR_PASSWORD]"
+    "username": "Jonathan",
+    "password": "jonathan"
   }
   ```
     
-    * **Note:** Username and password are currently hardcoded into the `_users` property of `UserService.cs` and can be changed as desired
+    **Note:** Username and password are currently hardcoded into the `_users` property of `UserService.cs` and can be changed as desired
   5. Send the request. If successful, the `200 OK` response will include a JWT token
   6. To make a request to other endpoints, open a new request as in step 2
   7. Complete the fields required by the request type and the endpoint requested
   8. Navigate to the `Authorization` tab and select `Bearer Token` from the `Type` dropdown menu
   9. Copy your JWT token and paste into the corresponding `Token` input field
-  10. Send your request!
+  10. Send your request to any of the endpoints! Keys are valid for 7 days.
 
 **Users**
   1. `/api/users/authenticate`: POST serves the username and password to the API to generate a JWT in the response body
